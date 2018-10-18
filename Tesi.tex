@@ -1,0 +1,57 @@
+\documentclass{unicam_thesis}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRONTESPIZIO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Editor di oggetti 3D per e-commerce configurabile e in realta' aumentata: \\ il backend di “Customyzx”}
+
+\university{Universit\`a degli Studi di Camerino}%
+\school{Scienze e Tecnologie}%
+\course{Laurea in Informatica (Classe L-31)}%
+
+
+\author{Paolo Andreassi}%
+\advisor{Dott. Francesco De Angelis}%
+\coadvisor2{Dott. Antonio dell' Ava}%
+\academicyear{2017/2018}%
+\matricola{090629}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FINE FRONTESPIZIO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\theoremstyle{definition} \newtheorem{esempio}{Esempio}[chapter]
+\theoremstyle{definition}
+\newtheorem{definizione}{Definizione}[chapter] \theoremstyle{plain}
+\newtheorem{teorema}{Teorema}[chapter]
+
+\graphicspath{{Screenshot/},{Immagini/},{Source/}}
+\bibliography{biblio.bib}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\lstlistoflistings
+\listoffigures
+\listoftables
+
+\input{introduzione}
+\input{ecommerce}
+\input{scelta_tecnologica}
+\input{long_polling}
+\input{implementazione}
+\input{conclusioni}
+
+\appendix
+\input{installazione_uso}
+\input{screenshot}
+\printbibliography
+
+\printindex
+%\include{ringraziamenti}
+
+\end{document}
