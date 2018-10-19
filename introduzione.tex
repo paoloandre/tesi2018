@@ -1,7 +1,7 @@
 \chapter{Introduzione}
 \label{chap:intro}
 La qui presente tesi rappresenta la terza ed ultima parte dello stage++\footnote{Lo stage++ è un progetto unico che comprende l'insieme di tre moduli: stage, project work e tesi.}, che è stato realizzato in collaborazione con il Prof. Francesco De Angelis, e-xtrategy s.r.l. e con il collega Filippo Corona.
-Durante lo stage ci è stato chiesto di progettare e realizzare un’ applicazione per la visualizzazione e l' editing di modelli
+Durante lo stage ci è stato chiesto di progettare e realizzare un’applicazione per la visualizzazione e l'editing di modelli
 3D da impiegare in ambito e-commerce.
 Il prodotto che ne è risultato ha preso il nome di "CustoMyzx".
 
@@ -18,7 +18,7 @@ Quindi il progetto è composto dalle seguenti parti:
 \end{enumerate}
 Tutte le parti di CustoMyzx sono state scritte in Javascript ad eccezione di uno script esterno realizzato in Python.
 
-Questa tesi tratterà nella fattispecie i primi due punti: la realizzazione dell' applicazione web mediante l'utilizzo del MEAN Stack\index{MEAN} piuttosto che il tradizionale LAMP Stack\footnote{Acronimo (Linux, Apache, MySQL, PHP) che indica una piattaforma software per lo sviluppo di applicazioni web}, e l' uso del modello architetturale nelle web app chiamato "Long Polling".
+Questa tesi tratterà nella fattispecie i primi due punti: la realizzazione dell'applicazione web mediante l'utilizzo del MEAN Stack\index{MEAN} piuttosto che il tradizionale LAMP Stack\footnote{Acronimo (Linux, Apache, MySQL, PHP) che indica una piattaforma software per lo sviluppo di applicazioni web}, e l'uso del modello architetturale nelle web app chiamato "Long Polling".
 
 Il codice completo del progetto è disponibile nei due repository
 \begin{enumerate}
@@ -56,7 +56,7 @@ Queste card si possono spostare tra le diverse liste con il metodo drag and drop
 Nel nostro caso ogni card rappresenta una user-story, ossia una funzionalità utile al raggiungimento di un obiettivo di business, una descrizione volutamente generica di una caratteristica che il software deve avere, e che può essere stata esplicitamente richiesta dal cliente, essere necessità o consiglio dello sviluppatore, o essere nata dalla discussione tra i due soggetti.
 Ogni card può vedersi assegnata ad uno o più sviluppatori, e queste si possono organizzare, insieme alle loro schede, in raggruppamenti personalizzati.
 Si possono inserire inoltre commenti, allegati, date di scadenza, voti e liste di controllo in ogni card.
-Nel complesso, la suddivisione di un progetto in schede/liste, che a loro volta sono suddivise in card, formano un insieme di dati su misura organizzati in modo gerarchico, che rende più facile ed efficace la gestione dei progetti, ma di conseguenza anche le attività di tutta l' organizzazione.
+Nel complesso, la suddivisione di un progetto in schede/liste, che a loro volta sono suddivise in card, formano un insieme di dati su misura organizzati in modo gerarchico, che rende più facile ed efficace la gestione dei progetti, ma di conseguenza anche le attività di tutta l'organizzazione.
 
 \begin{figure}[h]
 	\centering
@@ -90,7 +90,7 @@ La struttura dei documenti all'interno del progetto sarà la seguente:
 	\end{itemize}
 \end{itemize}
 
-Le user stories derivanti da questo processo di analisi sono le seguenti:
+Le user stories derivanti da questo processo di analisi verranno identificate dalla sigla "US-XX", in cui XX rappresenta un numero progressivo, e vengono elencate di seguito:
 
 \begin{longtable}{|c|l|}
 	% intestazione iniziale
@@ -111,27 +111,27 @@ Le user stories derivanti da questo processo di analisi sono le seguenti:
 	\multicolumn{2}{r}{} \\
 	\endlastfoot
 	\hline
-	01 & Scelta tecnologica.\\
+	US-01 & Scelta tecnologica.\\
 	\hline
-	02 & Benchmarking.\\
+	US-02 & Benchmarking.\\
 	\hline
-	03 & Capire come sono rappresentati gli oggetti in 3d su WebGL e che\\ 
+	US-03 & Capire come sono rappresentati gli oggetti in 3d su WebGL e che\\ 
 	& modello di dati utilizzano (es. svg).\\
 	\hline
-	04 & Come admin voglio poter inserire/eliminare/modificare/vedere una\\
+	US-04 & Come admin voglio poter inserire/eliminare/modificare/vedere una\\
 	& lista degli oggetti configurabili con nome e descrizione.\\
 	\hline
-	05 & Come admin voglio poter inserire/eliminare/modificare/vedere,\\  & per ogni oggetto, una lista di parti configurabili con nome.\\
+	US-05 & Come admin voglio poter inserire/eliminare/modificare/vedere,\\  & per ogni oggetto, una lista di parti configurabili con nome.\\
 	\hline
-	06 & Come admin voglio poter inserire/eliminare/modificare/vedere,\\  & per ogni parte configurabile, una o più opzioni di configurazione\\ & con 3D, descrizione e prezzo.\\
+	US-06 & Come admin voglio poter inserire/eliminare/modificare/vedere,\\  & per ogni parte configurabile, una o più opzioni di configurazione\\ & con 3D, descrizione e prezzo.\\
 	\hline
-	07 & Come viewer voglio avere un endpoint rest che mi restituisca\\   & il JSON di una forma obj che devo renderizzare.\\
+	US-07 & Come viewer voglio avere un endpoint rest che mi restituisca\\   & il JSON di una forma obj che devo renderizzare.\\
 	\hline
-	08 & Creare app single-page con Angular.\\
+	US-08 & Creare app single-page con Angular.\\
 	\hline
-	09 & Realizzare un caricamento della forma 3D non bloccante\\ & (upload, conversione ed endpoint in modo sincrono).\\
+	US-09 & Realizzare un caricamento della forma 3D non bloccante\\ & (upload, conversione ed endpoint in modo sincrono).\\
 	\hline
-	10 & Polling lato front-end per la ricezione del file .JSON una volta pronto.\\
+	US-10 & Polling lato front-end per la ricezione del file .JSON una volta pronto.\\
 	\hline
 	\caption{User stories}
 	\label{tab:user:sto} \\
