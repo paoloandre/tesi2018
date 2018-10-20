@@ -278,7 +278,9 @@ Infine la Collection delle forme 3D convertite contiene l'insieme dei file JSON 
 
 \section{Documentazione}
 Una parte fondamentale della progettazione di API REST è la documentazione.
-Per scrivere la documentazione necessaria è stato usato lo strumento Postman\index{Postman}.
+Per scrivere la documentazione necessaria è stato usato lo strumento Postman.
+
+Postman\index{Postman} è un ambiente di sviluppo multipiattaforma utile per testare le API, ossia per eseguire una qualsiasi chiamata HTTP al nostro server, e monitorare la risposta ottenuta in modo chiaro e leggibile. 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.35]{Immagini/postman_ui.png}
@@ -352,54 +354,301 @@ Il comando \texttt{npm install} creerà la cartella \texttt{node\_modules/}, con
 	}
 }
 \end{lstlisting}
-\newpage
+
 E' interessante analizzare alcune parti di questo file, oltre al fatto che anche questo è in formato JSON, e oltre alle prime righe che descrivono il progetto in sé per sé.
 Ci sono due script: quello chiamato \emph{start} avvia l'applicazione normalmente tramite il comando \texttt{node} seguito dal nome del file principale del server \texttt{app.js}.
 Lo script chiamato \emph{test} invece è interessante, perché avvia uno strumento (installato tramite l'apposita dipendenza) chiamato nodemon. Questo utilissimo \emph{demone} fa sì che in fase di test ogni qual volta si verifichi un errore che interrompe l'esecuzione del server nodemon attende un salvataggio dei file del progetto, che indica che lo sviluppatore ha modificato il codice per correggere l'errore, e non appena questo evento si verifica il demone riavvia in automatico il server ricominciando ad eseguire il codice.
 
 Un'altra dipendenza interessante riguarda \emph{python-shell}, che nel nostro progetto servirà ad eseguire lo script della libreria Three.js scritto in codice Python (altrimenti non eseguibile da Javascript), che si occupa di convertire il file .obj in JSON. python-shell può ricevere in input interi file scritti in Python per eseguirli in modo asincrono.
 
-Focalizziamoci ora sulla dipendenza \emph{async} per poter entrare nel dettaglio in una peculiarità di Node.js.
-Qualsiasi operazione che ha a che fare con blocchi di I/O, come leggere un file o interrogare un database, prenderà una callback come ultimo parametro e continuerà l'esecuzione del programma, ma
-solo quando l'operazione sarà completa il programma richiamerà la callback. Questo accade perché Node.js è progettato per eseguire le istruzioni in modo asincrono.
+\section{Configurazione iniziale e Test}
+Andiamo ora ad analizzare l'inizializzazione di un server Node.js, la configurazione di MongoDB su Mongolab e l'interazione di questi attraverso Express e Mongoose, che sono elementi che vedremo comunque più tardi.
 
-\begin{lstlisting}[caption={operazioni asincrone}, style=javaScriptCode, label={lst:async}]
-function foo() {
-	someAsyncFunction(params, function(err, results) {
-		console.log("one");
-	});
-	console.log("two");
-}
-\end{lstlisting}
+Il primo comando che si utilizza per inizializzare il progetto e per creare il relativo file package.json è \texttt{npm init}. Il comando va lanciato dalla root del progetto, che sarà collegata al repository su GitHub.
+Il prossimo passo consiste nel creare il file JavaScript del server in sé per sé. Questo file in unicam-product-editor si chiama \texttt{app.js}, ed è contenuto anch'esso nella root del progetto. Per eseguire già da ora il server, basterà posizionarsi con il prompt dei comandi nella root del progetto e lanciare il comando \texttt{node} seguito dal nome del file del server appena creato, quindi \texttt{node app.js}.
 
-Dal codice \ref{lst:async} ci si potrebbe aspettare che il risultato sia:
-\texttt{onetwo}.\\
-In realtà potrebbe capitare che l’output sia \texttt{twoone}.
+Si passa ora ad importare il framework express tramite la sua dipendenza e usando il gestore di pacchetti NPM. Per fare ciò dal prompt dei comandi basterà eseguire lo script \texttt{npm install express --save}. L'opzione \texttt{--save} serve a far comparire la dipendenza appena installata nell'apposita sezione del file package.json. Dalla versione 5.0.0 di NPM comunque questo comando è implicito.
+Alla fine dell'esecuzione dello script, avremo la dipendenza installata localmente nella cartella \texttt{node\_modules/}, e il file package.json apparirà come segue:
 
-Questa caratteristica dei programmi asincroni è detta esecuzione non deterministica. Anche se permette al programma di essere particolarmente performante, si può avere la necessità in alcuni casi di eseguire delle determinate istruzioni prima di altre o in un certo ordine.
-
-Per risolvere il problema della programmazione non deterministica si usa Async.
-Async è un modulo che fornisce delle funzioni per lavorare con il JavaScript in modo asincrono, che seguono la convenzione di Node.js di mettere una singola callback come ultimo parametro della funzione. 
-\newpage
-L'esempio seguente illustra come stampare i due numeri nell'ordine corretto utilizzando la libreria async:
-
-\begin{lstlisting}[caption={operazioni sincrone}, style=javaScriptCode]
-actionArray = [
-	function one(cb) {
-		someAsyncFunction(params, function(err, results)  {
-			if (err) {
-				cb(new Error("There was an error"));
-			}
-			console.log("one");
-			cb(null);
-		});
-	},
-	function two(cb) {
-		console.log("two");
-		cb(null);
+\begin{lstlisting}[caption={test installazione express}, style=javaScriptCode]
+{
+	"name": "node server",
+	"version": "1.0.0",
+	"main": "app.js",
+	"author": "Paolo Andreassi",
+	"license": "ISC",
+	"dependencies": {
+	...
+	"express": "^4.14.0",
+	...
 	}
-]
-async.series(actionArray);
+}
+
+\end{lstlisting}
+Di conseguenza, andremo ad utilizzare express nel nostro file \texttt{app.js} come segue:
+\begin{lstlisting}[caption={test require express}, style=javaScriptCode]
+const express = require('express');
+const app = express();
+\end{lstlisting}
+e lo utilizzeremo subito per creare il nostro server in ascolto sulla porta 3000 (almeno per questo test) tramite l'apposita istruzione
+\begin{lstlisting}[caption={test server express}, style=javaScriptCode]
+app.listen(3000, function() {
+	console.log('listening on port 3000')
+})
+\end{lstlisting}
+In express possiamo gestire le richieste HTTP GET attraverso il metodo \texttt{get}:
+\begin{lstlisting}[style=javaScriptCode]
+app.get(path, callback)
+\end{lstlisting}
+che useremo così per la nostra configurazione di test
+\begin{lstlisting}[caption={test hello world}, style=javaScriptCode]
+app.get('/', function(req, res) {
+	res.send('Hello World')
+})
+\end{lstlisting}
+In questo modo aprendo il nostro browser e digitando \texttt{localhost:3000} nella barra URL, dopo esserci assicurati di aver avviato l'applicazione, quello che il nostro server risponderà alla richiesta HTTP GET sarà:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{Immagini/test_hello_world.png}
+	\caption{Test di una richiesta HTTP GET}
+\end{figure}
+
+Una volta configurato il server per questo test, andiamo a fare lo stesso per il nostro database MongoDB.
+In unicam-product-editor il database è ospitato in cloud attraverso il servizio mLab\index{mLab}, che a sua volta si appoggia a servizi cloud quali Amazon Web Services, Google Cloud Platform e Windows Azure. mLab offre diversi piani tariffari, ma per il nostro progetto il piano Sandbox che offre 0.5GB di spazio gratuito va più che bene. Una volta creato il database su mLab, e dopo aver creato un utente di tipo amministratore per lo stesso database, mLab creerà una indirizzo URL, detto MongoDB URI, utilizzabile per connettersi a questo servizio, mediante l'uso del nome utente e della password dell'account amministratore. 
+\newpage
+La stringa corrispondente al database di unicam-product-editor è la seguente:
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{Immagini/mongodb_uri.png}
+	\caption{MongoDB URI}
+\end{figure}
+
+Come si può notare dalla schermata qui sopra, oltre ad essere indicata la versione del database in uso, è presente anche il comando da utilizzare per connettersi a mLab tramite il mongo shell, ossia un'interfaccia interattiva di MongoDB, che usa anch'essa istruzioni in JavaScript.
+Il prossimo step consiste nell'utilizzare proprio questo MongoDB URI per connettersi al database. In questo caso di test useremo il client nativo mongodb, mentre in unicam-product-editor verrà utilizzata la libreria Mongoose, che vedremo più tardi.
+
+Per installare il client mongodb basta lanciare il comando \texttt{npm install mongodb}, e per poterlo usare nel nostro progetto bisognerà importarlo come già fatto per Express, ossia tramite l'istruzione
+\begin{lstlisting}[style=javaScriptCode]
+const MongoClient = require('mongodb').MongoClient
+\end{lstlisting}
+L'istruzione standard in Express per la connessione al database tramite il client mongodb è la seguente:
+\begin{lstlisting}[style=javaScriptCode]
+MongoClient.connect('MONGODB_URI', function(err, client){
+	...
+})
+\end{lstlisting}
+e utilizzeremo la callback della funzione \texttt{.connect} per avviare il server Node.js solamente una volta che sarà avvenuta la corretta connessione al database. Per fare ciò basta aggiungere il codice
+\begin{lstlisting}[caption={connessione a mongodb}, style=javaScriptCode]
+MongoClient.connect('MONGODB_URI', function(err, client){
+	if (err) return console.log(err)
+	db = client.db('unicam-product-editor')
+	app.listen(3000, function() {
+		console.log('listening on port 3000')
+	})
+})
+\end{lstlisting}
+utilizzando la variabile db per salvare la sessione di collegamento al database appena ottenuta.
+
+A questo punto la connessione al nostro database è pronta all'uso, e possiamo utilizzare la funzione \texttt{.collection} per gestire le Collection presenti nel database.
+Se volessimo ad esempio inserire un Document in una Collection del database unicam-product-editor, la sintassi sarebbe la seguente:
+\begin{lstlisting}[caption={mongodb save}, style=javaScriptCode]
+db.collection('COLLECTION').save('DOCUMENT', function(err, result){
+	if (err) return console.log(err) //in caso di errore
+
+	console.log('saved to database') //in caso di corretto salvataggio
+})
 \end{lstlisting}
 
-Così facendo il risultato sarà quello aspettato, ossia \texttt{one} verrà stampato sicuramente prima di \texttt{two}.
+\section{Express}
+Con express.js\index{Express}, noi abbiamo creato la vera e propria "applicazione", che ascolta le richieste HTTP in ingresso su una data porta. Quando arriva una richiesta, questa passa attraverso una catena di intermediari, detti \emph{middleware}.
+Ogni nodo della catena è definito da un req (request) object, usato per ricevere dei parametri, e un res (results) object, usato per salvare i risultati. 
+Ogni nodo può decidere se eseguire delle operazioni, o se passare i due oggetti al nodo successivo. 
+Per aggiungere un nuovo middleware usiamo la funzione \texttt{app.use()}. 
+Il middleware principale, chiamato “router”, analizza l’URL e il tipo di richiesta per poterla poi indirizzare verso una specifica funzione.
+
+Il codice della nostra applicazione apparirà così organizzato, visto che i vari handler e le diverse funzioni specifiche saranno poi distribuiti in file separati.
+
+\begin{lstlisting}[caption={app.js}, style=javaScriptCode]
+var path = require('path'),
+	qs = require('querystring'),
+
+	async = require('async'),
+	bcrypt = require('bcryptjs'),
+	bodyParser = require('body-parser'),
+	colors = require('colors'),
+	cors = require('cors'),
+	express = require('express'),
+	exphbs = require('express-handlebars'),
+	favicon = require('serve-favicon'),
+	fileUpload = require('express-fileupload'),
+	fs = require('fs'),
+	http = require('http'),
+	logger = require('morgan'),
+	jwt = require('jwt-simple'),
+	moment = require('moment'),
+	mongoose = require('mongoose'),
+	request = require('request'),
+	url = require('url'),
+	
+	upload       = require('./app/upload'),
+	convert      = require('./app/convert'),
+	converted    = require('./app/converted'),
+	readjsonfile = require('./app/readjsonfile'),
+	users        = require('./routes/users'),
+	getshapes    = require('./app/getshapes'),
+	config       = require('./config');
+	
+var app = express();
+app.set('port', process.env.NODE_PORT || 3000);
+app.set('host', process.env.NODE_IP || 'localhost');
+app.set('view engine', 'handlebars');
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.use(bodyParser.json());
+app.use('/static', express.static('public'));
+app.use(express.static('partials'));
+app.use(fileUpload());
+require('./app/schema'),
+require('./routes')(app);
+\end{lstlisting}
+
+e la route principale del progetto sarà così dichiarata, essendo Handlebars il motore di rendering utilizzato in unicam-product-editor:
+
+\begin{lstlisting}[caption={configurazione server}, style=javaScriptCode]
+app.get('/', function(req, res) {
+	res.render('layouts/main.handlebars');
+})
+\end{lstlisting}
+
+Handlebars.js\index{Handlebars} è un'estensione del linguaggio di template \emph{Mustache}, creato da Chris Wanstrath. Sia Handlebars.js che Mustache sono linguaggi di template \emph{logicless}, che tengono separate, come da convenzione, la parte visiva del progetto e la parte di codice, migliorando l'organizzazione del progetto stesso.
+
+Per ultimo definiamo il nostro server in ascolto sulla porta indicata con la funzione Express \texttt{app.set(port)}, o sulla porta 3000 in tutti gli altri casi.
+\begin{lstlisting}[caption={configurazione server}, style=javaScriptCode]
+server = app.listen(process.env.PORT || 3000, function() {
+	var port = server.address().port
+	console.log("Express server listening on port %s", port)
+})
+\end{lstlisting}
+
+\section{Mongoose}
+A questo punto, i nostri dati vanno gestiti tramite l'uso di Mongoose\index{Mongoose}, un modellatore di oggetti MongoDB progettato per l'uso in Node.js.
+Come detto in precedenza, le Collection da definire sono le seguenti:
+\begin{itemize}
+	\item Users
+	\item Lists
+	\item Objects
+	\item Parts
+	\item Shapes
+\end{itemize}
+
+Per fare ciò, bisogna definire uno schema per ognuna delle Collection appena esposte; partendo dal primo, lo UserSchema sarà così dichiarato:
+
+\begin{lstlisting}[caption={userSchema}, style=javaScriptCode]
+var userSchema = new mongoose.Schema({
+	email: { type: String, unique: true, lowercase: true },
+	password: { type: String, select: false },
+	displayName: String,
+	picture: String,
+	facebook: String,
+	google: String
+});
+\end{lstlisting}
+
+come possiamo notare, con mongoose e MongoDB è possibile non solo dichiarare il tipo di dato che ogni proprietà conterrà, ma anche dei vincoli attraverso l'uso dei trim.
+Inoltre con mongoose è possibile definire, all'interno dello userSchema, funzioni e metodi che potremo all'occorrenza richiamare da altre parti del progetto.
+
+\begin{lstlisting}[caption={userSchema}, style=javaScriptCode]
+userSchema.pre('save', function(next) {
+	var user = this;
+	if (!user.isModified('password')) {
+		return next();
+	}
+	bcrypt.genSalt(10, function(err, salt) {
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			user.password = hash;
+			next();
+		});
+	});
+});
+
+userSchema.methods.comparePassword = function(password, done) {
+	bcrypt.compare(password, this.password, function(err, isMatch) {
+		done(err, isMatch);
+	});
+};
+\end{lstlisting}
+
+La funzione \texttt{userSchema.pre} viene eseguita appena prima dell'inserimento di un nuovo utente (tramite la funzione save) e si assicura di encriptare nuovamente la password di un utente ogni qual volta questa venga cambiata, prima di inserirla nel database.
+Il metodo \texttt{.comparePassword} invece si avvale dell'uso della libreria \emph{bcrypt} per decriptare la password passata al metodo come parametro prima di confrontarla con la password presente nel database, anch'essa opportunamente decriptata.
+
+Gli altri schema sono stati dichiarati nell'apposito file \texttt{schema.js}, ad eccezione della Collection Shape che non ha bisogno di un vero e proprio schema, e appaiono in questo modo:
+
+\begin{lstlisting}[caption={/app/schema.js}, style=javaScriptCode]
+var mongoose = require('mongoose'),
+Schema = mongoose.Schema;
+
+var lists = Schema({
+nome        : String
+});
+
+var objects = Schema({
+_list       : [{type: String, ref: 'List'}],
+nome        : String,
+descrizione : String,
+parts       : [{type: Schema.Types.ObjectId, ref: 'Part'}]
+});
+
+var parts = Schema({
+_object     : [{type: String, ref: 'Object'}],
+nome        : String,
+options     : [{type: Schema.Types.ObjectId, ref: 'Option'}]
+});
+
+var options = Schema({
+_part       : [{type: String, ref: 'Part'}],
+nome        : String,
+prezzo      : Number,
+forma       : String
+});
+
+module.exports    = mongoose.model('Option', options);
+module.exports    = mongoose.model('Part', parts);
+module.exports    = mongoose.model('Object', objects);
+module.exports    = mongoose.model('List', lists);
+\end{lstlisting}
+
+E' interessante notare come i vari schema si possono collegare tra loro attraverso l'uso del trim \texttt{ref}, che punta al nome di uno schema esportato.
+Nel caso di unicam-product-editor, che ha una struttura dati nidificata, questo trim è di cruciale importanza.
+
+In mongoose alcuni dei principali metodi usati per l'interfacciamento con il database sono:
+\begin{itemize}
+	\item \texttt{find()} per trovare tutti i Document all'interno di una Collection;
+	\item \texttt{findById()} per trovare un Document a seconda del suo attributo \texttt{\_id};
+	\item \texttt{findOne()} per trovare il primo Document che rispetti le condizioni dichiarate;
+	\item \texttt{deleteOne()} per eliminare il primo Document che rispetti le condizioni dichiarate;
+	\item \texttt{updateOne()} per aggiornare il primo Document che rispetti le condizioni dichiarate;
+	\item \texttt{replaceOne()} simile a \texttt{updateOne()}, con la differenza che mongoose rimpiazzerà il Document esistente con il Document che si darà in input.
+\end{itemize}
+
+\section{Heroku}
+Heroku\index{Heroku} è un platform as a service (PaaS) sul cloud che supporta linguaggi di programmazione come JavaScript(quindi Node.js), Ruby, Python, Java, PHP ed altri.
+Il fatto che sia un PaaS vuol dire che Heroku mette a disposizione di chi sviluppa una piattaforma dove poter rilasciare rapidamente una applicazione senza dover conoscere come configurare l’infrastruttura che c’è dietro.
+Nel nostro caso, Heroku ci è utile per rilasciare unicam-product-editor come web app su un servizio apposito.
+
+Per la configurazione e il rilascio della applicazione su Heroku, bisgona prima di tutto installare il suo CLI (Command Line Interface) e dopo essersi autenticati al servizio Heroku si procede a creare un clone del repository di unicam-product-editor presente su GitHub attraverso il comando \texttt{git clone 'git repository'}:
+
+\begin{lstlisting}[style=javaScriptCode]
+$ git clone https://github.com/e-xtrategy/unicam-product-editor.git
+\end{lstlisting}
+
+A questo punto, non resta che creare una nuova \emph{commit}, ma invece che eseguire un \emph{push} sul repository originale, si fa lo stesso utilizzando il comando \texttt{git push heroku master}.
+Alla fine dell'operazione, in caso di successo, il CLI mostra l'URL su cui è ospitata la nostra applicazione.
+Di seguito uno screenshot delle operazioni appena descritte eseguite in sequenza.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{Immagini/heroku_initialize.png}
+	\caption{Inizializzazione di unicam-product-editor su Heroku}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{Immagini/heroku_deployment.png}
+	\caption{Rilascio di unicam-product-editor su Heroku}
+\end{figure}
