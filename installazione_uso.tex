@@ -1,1 +1,26 @@
 \chapter{Installazione e Uso}
+\label{chap:installazione_uso}
+In questa sezione andremo a vedere come installare ed avviare unicam-product-editor.
+\section{Ambiente locale}
+Per prima cosa va scaricato o clonato il codice dalla repository presente su GitHub.
+\begin{lstlisting}[style=javaScriptCode]
+$ git clone https://github.com/e-xtrategy/unicam-product-editor.git
+\end{lstlisting}
+Poi, dalla cartella del progetto, installiamo i moduli e le dipendenze necessarie per il funzionamento dell'applicazione
+\begin{lstlisting}[style=javaScriptCode]
+npm install -g
+\end{lstlisting}
+Ed infine, per far partire l'applicazione, lanciamo il comando
+\begin{lstlisting}[style=javaScriptCode]
+npm start
+\end{lstlisting}
+A questo punto il server è connesso al database in hosting su mLab e in ascolto sulla porta 3000.
+Per eseguire l'applicazione è sufficiente aprire il browser e digitare nella barra URL il seguente indirizzo
+\begin{lstlisting}[style=javaScriptCode]
+http://localhost:3000
+\end{lstlisting}
+\section{Heroku}
+Per aprire l'applicazione rilasciata su Heroku basta aprire il browser e inserire il seguente URL nella apposita barra:
+\begin{lstlisting}[style=javaScriptCode]
+https://unicam-product-editor.herokuapp.com
+\end{lstlisting}
