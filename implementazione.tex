@@ -160,7 +160,7 @@ Lo scopo della funzione è quello di trovare nella Collection Shapes il document
 	\caption{Documentazione get /shape/:id}
 \end{figure}
 \section{US-05}
-Questa User story richiede di sviluppare una \emph{single-page application} che serva da client per l'utente. L'applicazione in questione è stata realizzata usando AngularJS\index, un framework web principalmente sviluppato da Google. La tecnologia che usa AngularJS è di tipo Single Page Application (SPA); una SPA viene eseguita all’interno di una singola pagina HTML: tutte le risorse necessarie alla sua esecuzione vengono caricate dinamicamente ed aggiunte al DOM (Document Object Model) della pagina corrente. In altre parole, all’interno di una singola pagina vengono caricate viste diverse in base all’interazione dell’utente con la pagina stessa. Questo approccio consente di creare applicazioni responsive che si avvicinano al funzionamento delle applicazioni desktop.
+Questa User story richiede di sviluppare una \emph{single-page application} che serva da client per l'utente. L'applicazione in questione è stata realizzata usando AngularJS\cite{angular}, un framework web principalmente sviluppato da Google. La tecnologia che usa AngularJS è di tipo Single Page Application (SPA); una SPA viene eseguita all’interno di una singola pagina HTML: tutte le risorse necessarie alla sua esecuzione vengono caricate dinamicamente ed aggiunte al DOM (Document Object Model) della pagina corrente. In altre parole, all’interno di una singola pagina vengono caricate viste diverse in base all’interazione dell’utente con la pagina stessa. Questo approccio consente di creare applicazioni responsive che si avvicinano al funzionamento delle applicazioni desktop.
 
 La root del client sviluppato in AngularJS è interamente contenuta nella cartella \texttt{/public}, ed oltre al file principale, \texttt{/public/app.js}, sono presenti le cartelle dei principali componenti usati dal framework, come i \emph{controllers}, le \emph{directives}, i \emph{services}, la cartella \texttt{vendors} che ospiterà in locale le librerie usate in unicam-product-editor, come la già citata jQuery, la cartella \texttt{partials} che conterrà le pagine HTML richieste come risorse e la cartella \texttt{stylesheets} che racchiude i file .css, ossia i fogli di stile, usati dall'applicazione.
 
@@ -278,8 +278,18 @@ module.exports = function convert (req, filename, res){
 	});
 };
 \end{lstlisting}
-Il file appena caricato viene convertito in JSON attraverso lo script Python \texttt{converter.py} contenuto nella cartella \texttt{/scripts}, che come detto in precedenza fa parte della libreria Three.js. Per essere eseguito, lo script viene passato come parametro alla funzione \texttt{run} della libreria \texttt{PythonShell}. Una volta finita l'operazione di conversione, si invia il file JSON in risposta come endpoint, tramite la funzione \texttt{JSON.stringify}.
-L'ultima operazione che viene eseguita è quella di inserimento del file JSON nel database, che avviene tramite la chiamata HTTP \texttt{/insert}. La API corrispondente rimanda il body dell'endpoint (quindi il JSON da inserire) alla funzione \texttt{readjsonfile}, che dopo aver inserito il JSON nel database, elimina i file temporanei creati durante l'intero processo.
+Il file appena caricato viene convertito in JSON attraverso lo script 
+Python \texttt{converter.py} contenuto nella cartella \texttt{/scripts}, 
+che come detto in precedenza fa parte della libreria Three.js. Per essere 
+eseguito, lo script viene passato come parametro alla funzione \texttt{run} 
+della libreria \texttt{PythonShell}. Una volta finita l'operazione di
+conversione, si invia il file JSON in risposta come endpoint, tramite la
+funzione \texttt{JSON.stringify}. L'ultima operazione che viene eseguita è 
+quella di inserimento del file JSON nel database, che avviene tramite la 
+chiamata HTTP \texttt{/insert}. La API corrispondente rimanda il body 
+dell'endpoint (quindi il JSON da inserire) alla funzione 
+\texttt{readjsonfile}, che dopo aver inserito il JSON nel database, elimina 
+i file temporanei creati durante l'intero processo.
 \begin{lstlisting}[{caption=/app/readjsonfile.js}, style=JavaScriptCode]
 var express = require('express'),
 	app = express(),
@@ -314,7 +324,7 @@ La chiave che fa sì che le operazioni di questo processo siano eseguite nel giu
 \section{US-07}
 La ultima user story prevede che un nuovo utente all'interno di unicam-product-editor possa registrarsi, o che un utente già registrato possa effettuare un login.
 
-Per questa funzionalità in unicam-product-editor è stato usato Satellizer\index{Satellizer}, un modulo aggiuntivo creato per AngularJS di autenticazione basato sui token. Con questo sistema l'utente è in grado di registrarsi ed eseguire il login sia con una semplice autenticazione basata su username e password che con l'autenticazione da terze parti (OAuth 1.0 e OAuth 2.0), come Google, Facebook, LinkedIn, Twitter, Instagram, GitHub ed altri. Nel nostro progetto è stata implementata l'autenticazone attraverso Google e Facebook, oltre a quella con indirizzo e-mail e password.
+Per questa funzionalità in unicam-product-editor è stato usato Satellizer\cite{Satellizer}, un modulo aggiuntivo creato per AngularJS di autenticazione basato sui token. Con questo sistema l'utente è in grado di registrarsi ed eseguire il login sia con una semplice autenticazione basata su username e password che con l'autenticazione da terze parti (OAuth 1.0 e OAuth 2.0), come Google, Facebook, LinkedIn, Twitter, Instagram, GitHub ed altri. Nel nostro progetto è stata implementata l'autenticazone attraverso Google e Facebook, oltre a quella con indirizzo e-mail e password.
 
 L'implementazione di questo modulo prevede i seguenti step (l'esempio qui riportato è quello dell'autenticazione Google):
 \begin{enumerate}

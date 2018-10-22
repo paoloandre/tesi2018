@@ -18,7 +18,7 @@ Quindi il progetto è composto dalle seguenti parti:
 \end{enumerate}
 Tutte le parti di CustoMyzx sono state scritte in Javascript ad eccezione di uno script esterno realizzato in Python.
 
-Questa tesi tratterà nella fattispecie i primi due punti: la realizzazione dell'applicazione web mediante l'utilizzo del MEAN Stack\index{MEAN} piuttosto che il tradizionale LAMP Stack\footnote{Acronimo (Linux, Apache, MySQL, PHP) che indica una piattaforma software per lo sviluppo di applicazioni web}, e l'uso del modello architetturale nelle web app chiamato "Long Polling".
+Questa tesi tratterà nella fattispecie i primi due punti: la realizzazione dell'applicazione web mediante l'utilizzo del MEAN Stack piuttosto che il tradizionale LAMP Stack\footnote{Acronimo (Linux, Apache, MySQL, PHP) che indica una piattaforma software per lo sviluppo di applicazioni web}, e l'uso del modello architetturale nelle web app chiamato "Long Polling".
 
 Il codice completo del progetto è disponibile nei due repository
 \begin{enumerate}
@@ -32,7 +32,7 @@ lo sviluppo iterativo e incrementale, la pianificazione adattiva, e il coinvolgi
 
 In particolare, abbiamo utilizzato una via di mezzo tra Scrum e Kanban.
 
-L'utilizzo del framework Scrum\cite{scrum}\index{Scrum} consiste nel passaggio attraverso una serie di iterazioni a intervalli di tempo regolari, dette sprint\index{Sprint}, che consentono di consegnare il progetto passo dopo passo al cliente e con cadenza costante. Attraverso la giusta frequenza adottata per gli sprint, si è capaci di fare delle stime più corrette, e inoltre si possono ricevere feedback in tempo reale sul lavoro svolto.
+L'utilizzo del framework Scrum\cite{scrum} consiste nel passaggio attraverso una serie di iterazioni a intervalli di tempo regolari, dette sprint, che consentono di consegnare il progetto passo dopo passo al cliente e con cadenza costante. Attraverso la giusta frequenza adottata per gli sprint, si è capaci di fare delle stime più corrette, e inoltre si possono ricevere feedback in tempo reale sul lavoro svolto.
 Ogni sprint si divide in quattro fasi:
 \begin{enumerate}
 	\item \textbf{Pianificazione}: incontro iniziale in cui si definisce cosa fare con lo sprint corrente.
@@ -41,7 +41,7 @@ Ogni sprint si divide in quattro fasi:
 	\item \textbf{Retrospettiva}: una revisione di ciò che è stato fatto, esponendo anche i possibili miglioramenti attuabili.
 \end{enumerate} 
 
-Il Kanban\cite{kanban}\index{kanban} serve per tenere d'occhio l'avanzamento dei lavori durante gli sprint; la kanban board dunque non è altro che una lavagna atta a visualizzare e ottimizzare il flusso di lavoro del team. Un classico kanban può essere dato da una lavagna o da un' intera parete (es. e-xtrategy), ma per il nostro sviluppo software abbiamo utilizzato una board virtuale, in cui abbiamo riscontrato aspetti positivi quali tracciabilità, facilità di collaborazione, accessibilità delocalizzata.
+Il Kanban\cite{kanban} serve per tenere d'occhio l'avanzamento dei lavori durante gli sprint; la kanban board dunque non è altro che una lavagna atta a visualizzare e ottimizzare il flusso di lavoro del team. Un classico kanban può essere dato da una lavagna o da un' intera parete (es. e-xtrategy), ma per il nostro sviluppo software abbiamo utilizzato una board virtuale, in cui abbiamo riscontrato aspetti positivi quali tracciabilità, facilità di collaborazione, accessibilità delocalizzata.
 
 Le funzioni di una kanban sono comunque quelle di standardizzare il flusso di lavoro e di assicurare una buona visibilità e visualizzazione del lavoro del team, per poter individuare e risolvere tempestivamente eventuali criticità.
 Questa metodologia inoltre è basata sulla trasparenza e sulla comunicazione, pertanto la kanban board dovrebbe essere vista come una visione oggettiva e veritiera agli occhi del team.
@@ -49,7 +49,7 @@ Di norma si prevedono tre step: To Do, In Progress e Done, che noi abbiamo rinom
 
 Con questa impostazione, Antonio Dell'Ava, il nostro tutor in e-xtrategy, ci ha guidato verso lo strumento più utile per tenere traccia dello sviluppo del software, implementare le user-stories e coordinare gli sviluppatori assegnati al progetto, in questo caso io e Filippo: Trello ci ha permesso di gestire il nostro piccolo team senza applicare alla lettera Kanban, ma tramite una semplice todo list.
 
-Trello\index{Trello}\cite{trello} è un gestore di progetti basato sul web e realizzato da Fog Creek Software nel 2011.
+Trello\cite{trello} è un gestore di progetti basato sul web e realizzato da Fog Creek Software nel 2011.
 Qui il progetto è rappresentato da schede, a loro volta contenenti liste corrispondenti ad elenchi di attività. Le liste sono formate da card, che rappresentano le singole attività.
 Queste card si possono spostare tra le diverse liste con il metodo drag and drop, per seguire il normale flusso di sviluppo passando dalla lista "da fare" ad esempio alla lista "fatto" una volta che è stata realizzata questa parte del progetto.
 
@@ -66,7 +66,7 @@ Nel complesso, la suddivisione di un progetto in schede/liste, che a loro volta 
 
 \section{Analisi}
 Si vuole realizzare una applicazione web che permetta di gestire gli oggetti 3D tramite upload, modifica e visualizzazione in formato .JSON.
-Il backend deve ricevere in input una forma 3D sotto forma di file in formato .obj, convertirlo in .JSON e fornire i servizi REST\index{REST}.
+Il backend deve ricevere in input una forma 3D sotto forma di file in formato .obj, convertirlo in .JSON e fornire i servizi REST\cite{rest}.
 Un utente deve poter inserire l'oggetto 3D tramite l'uploader, modificare i metadati dell'oggetto convertito e visualizzare il file convertito attraverso un apposito endpoint una volta effettuata l'autenticazione.
 Il processo di upload e conversione in particolare non deve essere bloccante, in quanto l'utente deve poter continuare ad utilizzare il servizio anche durante l'upload di una forma 3D molto grande.
 

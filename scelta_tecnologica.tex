@@ -2,15 +2,15 @@
 \label{chap:scelta}
 In questo capitolo viene trattata l'architettura utilizzata per unicam-product-editor e il modo in cui vengono gestiti i dati attraverso la web app, per poi passare ad illustrare l'organizzazione del codice.
 
-Per sviluppare unicam-product-editor è stato utilizzato lo stack MEAN\index{MEAN} che non è altro che l'insieme dei quattro componenti che ne fanno parte:
+Per sviluppare unicam-product-editor è stato utilizzato lo stack MEAN che non è altro che l'insieme dei quattro componenti che ne fanno parte:
 \begin{itemize}
 	\item M = MongoDB: il popolare database
 	\item E = Express.js: un framework web leggero
 	\item A = Angular.js: un framework per la creazione di single page application
 	\item N = Node.js v4: un interprete JavaScript costruito sul motore JavaScript V8 di Google Chrome orientato agli eventi che lo rende efficiente e leggero
 \end{itemize}
-Lo stack MEAN è un' alternativa al più tradizionale stack LAMP\index{LAMP} (Linux, Apache, MySQL, PHP/Perl/Python/P…), molto popolare per il suo utilizzo nella costruzione di applicazioni web dagli anni '90 in poi.
-Di seguito andiamo a costruire le RESTful API, che sono la base per qualsiasi tipo di applicazione, come un sito web, un'app Android, iOS o Ubuntu Touch.
+Lo stack MEAN è un' alternativa al più tradizionale stack LAMP (Linux, Apache, MySQL, PHP/Perl/Python/P…), molto popolare per il suo utilizzo nella costruzione di applicazioni web dagli anni '90 in poi.
+Di seguito andiamo a costruire le RESTful API\cite{restful_api}, che sono la base per qualsiasi tipo di applicazione, come un sito web, un'app Android, iOS o Ubuntu Touch.
 
 \section{Oggetti 3D}
 Un modello 3D è una rappresentazione matematica di un oggetto tridimensionale e consiste sostanzialmente in un file di dati strutturati, contenenti le proprietà delle primitive geometriche che costituiscono l'oggetto rappresentato (un corpo fisico). Un oggetto 3D quindi non è altro che un insieme di dati composto da punti nello spazio tridimensionale (tre dimensioni X, Y e Z) e altre informazioni (spesso metadati, o informazioni aggiuntive).
@@ -27,7 +27,7 @@ I principali formati utilizzati per i modelli 3D:
 	\item VRML (obsoleto)
 	\item X3D
 \end{itemize}
-La scelta per cui abbiamo optato per la realizzazione del nostro progetto è ricaduta sul .obj, o più correttamente Wavefront .obj\index{obj}, un formato di file sviluppato dalla Wavefront Technologies per il software Advanced Visualizer. Il motivo di questa scelta risiede nel fatto che il .obj è un formato aperto che è stato adottato da tantissimi applicativi per la grafica 3D per l'interscambio di dati con altri programmi; ciò lo rende perfetto per il nostro progetto, in quanto questo dovrà poi essere trasformato in un corrispondente file .JSON per poter essere interpretato dal viewer\index{unicam-product-viewer}.
+La scelta per cui abbiamo optato per la realizzazione del nostro progetto è ricaduta sul .obj, o più correttamente Wavefront .obj, un formato di file sviluppato dalla Wavefront Technologies per il software Advanced Visualizer. Il motivo di questa scelta risiede nel fatto che il .obj è un formato aperto che è stato adottato da tantissimi applicativi per la grafica 3D per l'interscambio di dati con altri programmi; ciò lo rende perfetto per il nostro progetto, in quanto questo dovrà poi essere trasformato in un corrispondente file .JSON per poter essere interpretato dal viewer\cite{upv}.
 
 Questo è, per intero, il file .obj per la creazione di un cubo
 
@@ -78,9 +78,9 @@ L'oggetto 3D che ne deriva può essere facilmente visualizzato tramite ad esempi
 \end{figure}
 
 \section{JSON}
-JSON è un formato di dati molto leggere basato su un sottoinsieme della sintassi JavaScript, cioè \emph{array literal} e \emph{object literal}, proposto da Douglas Crockford come formato per i servizi web in sostituzione al verboso XML\index{XML}.
+JSON è un formato di dati molto leggere basato su un sottoinsieme della sintassi JavaScript, cioè \emph{array literal} e \emph{object literal}, proposto da Douglas Crockford come formato per i servizi web in sostituzione al verboso XML.
 
-Dato l'utilizzo della sintassi Javascript, le definizioni JSON\index{JSON} possono essere incluse all'interno dei file JavaScript\index{JavaScript}.
+Dato l'utilizzo della sintassi Javascript, le definizioni JSON\cite{json} possono essere incluse all'interno dei file JavaScript\cite{javascript}.
 \subsection{Gli array literal}
 
 Gli \emph{array literal} rappresentano il metodo più semplice per creare un array in JavaScript.
@@ -163,7 +163,7 @@ REST utilizza un modello client-server, dove il server è un server HTTP e il cl
 Nel nostro caso il server risponde restituendo del codice e un JSON (JavaScript Object Notation).
 Una RESTful API quindi è l'Interfaccia di Programmazione di un'Applicazione che usa le richieste HTTP per gestire i dati che vengono scambiati fra client e server.
 
-Dato che in unicam-product-editor viene utilizzato lo stack MEAN, abbiamo scelto di utilizzare documenti JSON che risultano particolarmente adatti per la nostra applicazione, visto che tutti i nostri componenti sono in JavaScript e MongoDB interagisce perfettamente con questo formato. 
+Dato che in unicam-product-editor viene utilizzato lo stack MEAN, abbiamo scelto di utilizzare documenti JSON che risultano particolarmente adatti per la nostra applicazione, visto che tutti i nostri componenti sono in JavaScript e MongoDB\cite{mongodb} interagisce perfettamente con questo formato. 
 Faremo degli esempi più dettagliati più avanti quando definiremo i nostri Data Model.
 
 Le operazioni principali che si possono eseguire con questo metodo sono le seguenti:
@@ -280,7 +280,7 @@ Infine la Collection delle forme 3D convertite contiene l'insieme dei file JSON 
 Una parte fondamentale della progettazione di API REST è la documentazione.
 Per scrivere la documentazione necessaria è stato usato lo strumento Postman.
 
-Postman\index{Postman} è un ambiente di sviluppo multipiattaforma utile per testare le API, ossia per eseguire una qualsiasi chiamata HTTP al nostro server, e monitorare la risposta ottenuta in modo chiaro e leggibile. 
+Postman\cite{postman} è un ambiente di sviluppo multipiattaforma utile per testare le API, ossia per eseguire una qualsiasi chiamata HTTP al nostro server, e monitorare la risposta ottenuta in modo chiaro e leggibile. 
 Tramite questo strumento è possibile effettuare delle chiamate API senza dover mettere mano al codice dell’applicazione, consentendo di effettuare le chiamate tramite questo plugin che fornisce un’utile interfaccia grafica. Le richieste possono essere effettuate sia verso un server locale che verso un server online impostando tutti i dati di una tipica chiamata API, dagli headers al body.
 \begin{figure}[h]
 	\centering
@@ -289,7 +289,7 @@ Tramite questo strumento è possibile effettuare delle chiamate API senza dover 
 \end{figure}
 
 \section{NodeJS}
-Node.js\cite{node}\index{Node} v4 è un interprete JavaScript orientato agli eventi, progettato per realizzare applicazioni di rete scalabili.
+Node.js\cite{node} v4 è un interprete JavaScript orientato agli eventi, progettato per realizzare applicazioni di rete scalabili.
 La caratteristica principale è che rimane inattivo finché non arriva una connessione in ingresso, o più generalmente un qualsiasi evento, e viene chiamata la relativa callback.
 Questo paradigma è in contrasto con quello tradizionale basato sui thread.
 Il principale vantaggio del paradigma ad eventi rispetto a quello basato sui thread si ha quando c'è un alto traffico.
@@ -299,7 +299,7 @@ Inoltre, dato che nessuna funzione di Node eseguirà direttamente operazioni di 
 La versione di Node usata in unicam-product-editor è la v4.6.0.
 Se da un lato su un server è normale avere solo una versione di Node, potrebbe non esserlo su una macchina di sviluppo.
 Può capitare, infatti, che uno sviluppatore sia impegnato su più progetti Node che utilizzano versioni differenti.
-Per risolvere questo problema possiamo installare NVM\index{NVM}.
+Per risolvere questo problema possiamo installare NVM.
 Node Version Manager permette di avere più versioni di Node contemporaneamente nel nostro sistema e fornisce una semplice CLI per poterle gestire.
 In particolare, basta creare un file di testo chiamato \texttt{.nvmrc} in cui salvare il numero di versione di Node che si intende usare per la cartella corrente.
 Poi, sarà sufficiente digitare il comando \texttt{nvm install} per scaricare ed utilizzare la giusta versione.
@@ -307,11 +307,10 @@ Poi, sarà sufficiente digitare il comando \texttt{nvm install} per scaricare ed
 Node è disponibile per diverse piattaforme, come Linux, Microsoft Windows e Apple OS X.
 Le applicazioni Node.js vengono costruite utilizzando librerie e moduli disponibili per l'ecosistema ed alcuni di essi sono stati utilizzati in unicam-product-editor.
 Per iniziare ad utilizzare Node.js, dobbiamo per prima cosa creare un file \texttt{package.json}, che descrive la nostra applicazione ed elenca tutte le sue dipendenze.
-NPM (Node.js Package Manager)\index{NPM} installa una copia delle librerie in una sotto-cartella chiamata \texttt{node\_modules/}, della cartella principale dell'applicazione. 
+NPM (Node.js Package Manager) installa una copia delle librerie in una sotto-cartella chiamata \texttt{node\_modules/}, della cartella principale dell'applicazione. 
 Questo comporta diversi benefici, ad esempio isola le diverse versioni delle librerie, evitando così i problemi di compatibilità che si sarebbero presentati se avessimo installato tutto in una cartella standard come \texttt{/usr/lib}.
 
 Il comando \texttt{npm install} creerà la cartella \texttt{node\_modules/}, con dentro tutte le librerie richieste e specificate nel file package.json:
-
 \begin{lstlisting}[caption={package.json}, style=javaScriptCode][h]
 {
 	"name": "unicam-product-editor",
@@ -415,7 +414,7 @@ In questo modo aprendo il nostro browser e digitando \texttt{localhost:3000} nel
 \end{figure}
 
 Una volta configurato il server per questo test, andiamo a fare lo stesso per il nostro database MongoDB.
-In unicam-product-editor il database è ospitato in cloud attraverso il servizio mLab\index{mLab}, che a sua volta si appoggia a servizi cloud quali Amazon Web Services, Google Cloud Platform e Windows Azure. mLab offre diversi piani tariffari, ma per il nostro progetto il piano Sandbox che offre 0.5GB di spazio gratuito va più che bene. Una volta creato il database su mLab, e dopo aver creato un utente di tipo amministratore per lo stesso database, mLab creerà una indirizzo URL, detto MongoDB URI, utilizzabile per connettersi a questo servizio, mediante l'uso del nome utente e della password dell'account amministratore. 
+In unicam-product-editor il database è ospitato in cloud attraverso il servizio mLab, che a sua volta si appoggia a servizi cloud quali Amazon Web Services, Google Cloud Platform e Windows Azure. mLab offre diversi piani tariffari, ma per il nostro progetto il piano Sandbox che offre 0.5GB di spazio gratuito va più che bene. Una volta creato il database su mLab, e dopo aver creato un utente di tipo amministratore per lo stesso database, mLab creerà una indirizzo URL, detto MongoDB URI, utilizzabile per connettersi a questo servizio, mediante l'uso del nome utente e della password dell'account amministratore. 
 \newpage
 La stringa corrispondente al database di unicam-product-editor è la seguente:
 \begin{figure}[h]
@@ -460,7 +459,7 @@ db.collection('COLLECTION').save('DOCUMENT', function(err, result){
 \end{lstlisting}
 
 \section{Express}
-Con express.js\index{Express}, noi abbiamo creato la vera e propria "applicazione", che ascolta le richieste HTTP in ingresso su una data porta. Quando arriva una richiesta, questa passa attraverso una catena di intermediari, detti \emph{middleware}.
+Con express.js\cite{express}, noi abbiamo creato la vera e propria "applicazione", che ascolta le richieste HTTP in ingresso su una data porta. Quando arriva una richiesta, questa passa attraverso una catena di intermediari, detti \emph{middleware}.
 Ogni nodo della catena è definito da un req (request) object, usato per ricevere dei parametri, e un res (results) object, usato per salvare i risultati. 
 Ogni nodo può decidere se eseguire delle operazioni, o se passare i due oggetti al nodo successivo. 
 Per aggiungere un nuovo middleware usiamo la funzione \texttt{app.use()}. 
@@ -519,7 +518,7 @@ app.get('/', function(req, res) {
 })
 \end{lstlisting}
 
-Handlebars.js\index{Handlebars} è un'estensione del linguaggio di template \emph{Mustache}, creato da Chris Wanstrath. Sia Handlebars.js che Mustache sono linguaggi di template \emph{logicless}, che tengono separate, come da convenzione, la parte visiva del progetto e la parte di codice, migliorando l'organizzazione del progetto stesso.
+Handlebars.js è un'estensione del linguaggio di template \emph{Mustache}, creato da Chris Wanstrath. Sia Handlebars.js che Mustache sono linguaggi di template \emph{logicless}, che tengono separate, come da convenzione, la parte visiva del progetto e la parte di codice, migliorando l'organizzazione del progetto stesso.
 
 Per ultimo definiamo il nostro server in ascolto sulla porta indicata con la funzione Express \texttt{app.set(port)}, o sulla porta 3000 in tutti gli altri casi.
 \begin{lstlisting}[caption={configurazione server}, style=javaScriptCode]
@@ -530,7 +529,7 @@ server = app.listen(process.env.PORT || 3000, function() {
 \end{lstlisting}
 
 \section{Mongoose}
-A questo punto, i nostri dati vanno gestiti tramite l'uso di Mongoose\index{Mongoose}, un modellatore di oggetti MongoDB progettato per l'uso in Node.js.
+A questo punto, i nostri dati vanno gestiti tramite l'uso di Mongoose, un modellatore di oggetti MongoDB progettato per l'uso in Node.js.
 Come detto in precedenza, le Collection da definire sono le seguenti:
 \begin{itemize}
 	\item Users
@@ -630,7 +629,7 @@ In mongoose alcuni dei principali metodi usati per l'interfacciamento con il dat
 \end{itemize}
 
 \section{Heroku}
-Heroku\index{Heroku} è un platform as a service (PaaS) sul cloud che supporta linguaggi di programmazione come JavaScript(quindi Node.js), Ruby, Python, Java, PHP ed altri.
+Heroku\cite{heroku} è un platform as a service (PaaS) sul cloud che supporta linguaggi di programmazione come JavaScript(quindi Node.js), Ruby, Python, Java, PHP ed altri.
 Il fatto che sia un PaaS vuol dire che Heroku mette a disposizione di chi sviluppa una piattaforma dove poter rilasciare rapidamente una applicazione senza dover conoscere come configurare l’infrastruttura che c’è dietro.
 Nel nostro caso, Heroku ci è utile per rilasciare unicam-product-editor come web app su un servizio apposito.
 

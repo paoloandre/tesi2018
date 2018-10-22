@@ -22,14 +22,15 @@
 % FINE FRONTESPIZIO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
 \theoremstyle{definition} \newtheorem{esempio}{Esempio}[chapter]
 \theoremstyle{definition}
 \newtheorem{definizione}{Definizione}[chapter] \theoremstyle{plain}
 \newtheorem{teorema}{Teorema}[chapter]
 
 \graphicspath{{Screenshot/},{Immagini/},{Source/}}
+%\bibdata{biblio.bib}
 \bibliography{biblio.bib}
+%\addbibresource{biblio.bib}
 \begin{document}
 
 \maketitle
@@ -48,9 +49,10 @@
 \appendix
 \input{installazione_uso}
 \input{screenshot}
+%\printindex
 \printbibliography
 
-\printindex
+
 %\include{ringraziamenti}
 
 \end{document}
